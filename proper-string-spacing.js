@@ -8,7 +8,7 @@
 // 6 string, 8 for 8 string, 4 for standard bass, etc.).
 
 // The output will be the offset distance of each string from the first string.
-function proper_string_spacing(
+export default function proper_string_spacing(
     distance_between_outer_strings = 1.444,
     string_thicknesses = [0.046, 0.036, 0.026, 0.017, 0.013, 0.010]
 ) {
