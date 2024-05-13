@@ -41,5 +41,6 @@ export default function proper_string_spacing(
     const cumulative_distances = midline_distances
         .map((_, i, arr) => arr.slice(0, i + 1).reduce(sum))
     
-    return cumulative_distances
+    // make it more legible by including the first string with a 0 offset    
+    return [0].concat(cumulative_distances)
 }

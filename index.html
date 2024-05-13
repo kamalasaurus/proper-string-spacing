@@ -2,36 +2,80 @@
 <html>
   <head>
     <title>proper string spacing</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        font-family: monospace;
+      }
+
+      .context {
+        white-space: pre-line;
+      }
+
+      .button {
+        display: inline-block;
+        background-color: gray;
+        color: white;
+        border-radius: 2px;
+        width: 1em;
+        height: 1em;
+        text-align: center;
+        line-height: 1em;
+        cursor: pointer;
+      }
+
+      #output {
+        margin-top: 25px;
+      }
+
+      .application {
+        width: 720px;
+        margin: 0 auto;
+      }
+
+      @media only screen and (orientation: portrait) {
+        .application {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
-    <script src="proper-string-spacing.js" type="module"></script>
     <script src="index.js" type="module"></script>
-    <form action="javascript:handleSubmit()" id="input">
-      <input type="number"
-        name="distance-between-outer-strings"
-        min="0.001" step="0.001"
-        value="1.444"
-      />
-      <input type="submit" value="Get Offsets" />
-    </form>
-    <span
-      style="
-        display: inline-block;
-        background-color: gray;
-        color: white;
-        border-radius: 2px;
-      "
-      onclick="addString()"
-    >+</span>
-    <span
-      style="
-        display: inline-block;
-        background-color: gray;
-        color: white;
-        border-radius: 2px;
-      "
-      onclick="removeString()"
-    >-</span>
-    <div id="output"></div>
+    <div class="application">
+      <h3>proper string spacing</h3>
+
+      <div class="context">
+        Howdy.  This is a string spacing calculator for musical instrument design based on Doug Proper's method.  While the intention is to design the nut of a guitar, you could design a piano agraffe or a harp bridge with this if you wanted.
+
+        Please input values in inches, with resolution down to thousandths of an inch.  The default is for 6-strings, but you can add/remove as many strings as you want.  If you wanted to do a 12-string, do each course independently.
+
+        The outputs will be the offset distance of each string from the first string in inches.
+      </div>
+
+      <form action="javascript:handleSubmit();" id="input">
+        <h4>
+          <label for="distance-between-outer-strings">distance between outer strings:</label>
+        </h4>
+        <input type="number"
+          name="distance-between-outer-strings"
+          min="0.001" step="0.001"
+          value="1.444"
+        />
+
+        <h4>
+          <label for="string-container">string thicknesses:</label>
+        </h4>
+        <span class="button" onclick="addString();">+</span>
+        <span class="button" onclick="removeString();">-</span>
+        <div id="string-container"></div>
+
+        <br />
+        <input type="submit" value="Get Offsets" />
+      </form>
+
+      <div id="output"></div>
+    </div>
   </body>
 </html>
