@@ -16,8 +16,9 @@
         background-color: gray;
         color: white;
         border-radius: 2px;
-        width: 1em;
-        height: 1em;
+        border-style: none;
+        min-width: 1em;
+        min-height: 1em;
         text-align: center;
         line-height: 1em;
         cursor: pointer;
@@ -44,6 +45,10 @@
         margin: 0 auto;
       }
 
+      #string-container {
+        margin-top: 10px;
+      }
+
       table {
         text-align: right;
       }
@@ -61,11 +66,22 @@
           width: 100%;
         }
 
+        input, label, .button {
+          height: 2.5em;
+          line-height: 2.5em;
+          font-size: 2.5em;
+        }
+
         .button {
-          width: 4em;
-          height: 4em;
-          line-height: 4em;
-          font-size: 4em;
+          min-width: 2.5em;
+        }
+
+        #string-container {
+          margin-top: 25px;
+        }
+
+        table, :not(form) > h4, h3, .context, .inner-edge-distance {
+          font-size: 2.5em;
         }
       }
     </style>
@@ -80,7 +96,7 @@
 
         Please input values in inches, with resolution down to thousandths of an inch.  The default is for 6-strings, but you can add/remove as many strings as you want.  If you wanted to do a 12-string, do each course independently.
 
-        The outputs will be the offset distance of each string from the first string in inches.
+        The outputs will include the string, the string thickness, the distance between adjacent strings, and the total offset distance of each string from the first string in inches.  You may copy each column or the whole table by clicking the relevant button.
       </div>
 
       <form action="javascript:handleSubmit();" id="input">
@@ -101,7 +117,7 @@
         <div id="string-container"></div>
 
         <br />
-        <input type="submit" value="Get Offsets" />
+        <input type="submit" value="Get Offsets" class="button" />
       </form>
 
       <div id="output"></div>

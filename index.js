@@ -8,6 +8,7 @@ function create_inner_distance(inner_edge_distance) {
     heading.textContent = 'string inner edge distances'
   
   const data = document.createElement('div')
+    data.classList.add('inner-edge-distance')
     data.textContent = inner_edge_distance
   
   container.appendChild(heading)
@@ -24,15 +25,20 @@ function create_cell(txt, header = false) {
 
 function create_copy_button(index) {
   const el = document.createElement('span')
+  if (index === undefined) {
+    el.textContent = 'copy 🧾'
+    el.addEventListener('mousedown', handleCopy)
+  } else {
     el.textContent = 'copy ↓'
-    el.classList.add('copy_button')
     el.setAttribute('data-index', index + 1)
     el.addEventListener('mousedown', handleCopy)
+  }
+    el.classList.add('copy_button')
   return el
 }
 
 function create_table_header() {
-  return ['string ', 'adjacent distances ', 'cumulative distances ']
+  return ['string ', 'string thicknesses', 'adjacent distances ', 'cumulative distances ']
     .map((txt, i) => {
       const el = create_cell(txt, true)
       const copy_button = create_copy_button(i)
@@ -45,15 +51,16 @@ function create_table_header() {
     }, document.createElement('tr'))
 }
 
-function create_table(strings, midline_distances, cumulative_distances) {
+function create_table(strings, string_thicknesses, midline_distances, cumulative_distances) {
   const container = document.createElement('div')
 
   const header = document.createElement('h4')
-    header.textContent = 'string midline distances'
+    header.textContent = 'string midline distances '
 
   const table = Array.from({length: strings.length}, ()=> document.createElement('tr'))
     .map((row, i) => {
       row.appendChild(create_cell(strings[i]))
+      row.appendChild(create_cell(string_thicknesses[i]))
       row.appendChild(create_cell(midline_distances[i]))
       row.appendChild(create_cell(cumulative_distances[i]))
       return row
@@ -63,6 +70,7 @@ function create_table(strings, midline_distances, cumulative_distances) {
       return tab
     }, document.createElement('table'))
 
+    header.appendChild(create_copy_button())
     container.appendChild(header)
     container.append(table)
 
@@ -124,14 +132,20 @@ function handleSubmit() {
   } = proper_string_spacing(distance_between_outer_strings, string_thicknesses)
 
   output.appendChild(create_inner_distance(inner_edges))
-  output.appendChild(create_table(strings, midlines, cumulatives))
+  output.appendChild(create_table(strings, string_thicknesses, midlines, cumulatives))
 }
 
 async function handleCopy(e) {
   const data_index = this.getAttribute('data-index')
-  const content = Array
-    .from(document.querySelectorAll(`tr > td:nth-of-type(${data_index})`))
-    .map(el => el.textContent).join('\n')
+  const content = (data_index === null) ?
+    Array
+      .from(document.querySelectorAll('tr'))
+      .map(row => {
+        return Array.from(row.childNodes).map(el => el.textContent).join('\t')
+      }).slice(1).join('\n') :
+    Array
+      .from(document.querySelectorAll(`tr > td:nth-of-type(${data_index})`))
+      .map(el => el.textContent).join('\n')
 
   try {
     await navigator.clipboard.writeText(content)
