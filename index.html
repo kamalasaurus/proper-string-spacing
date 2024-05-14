@@ -23,13 +23,37 @@
         cursor: pointer;
       }
 
+      .copy_button {
+        display: inline-block;
+        background-color: gray;
+        color: white;
+        border-radius: 2px;
+        text-align: center;
+        height: 1em;
+        line-height: 1em;
+        cursor: pointer;
+        padding: 0 2px;
+      }
+
       #output {
-        margin-top: 25px;
+        margin: 25px 0;
       }
 
       .application {
         width: 720px;
         margin: 0 auto;
+      }
+
+      table {
+        text-align: right;
+      }
+
+      th {
+        text-decoration: underline;
+      }
+
+      th:not(:first-of-type) {
+        padding-left: 25px;
       }
 
       @media only screen and (orientation: portrait) {

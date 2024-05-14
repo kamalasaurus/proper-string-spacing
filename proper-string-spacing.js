@@ -14,6 +14,8 @@ export default function proper_string_spacing(
 ) {
     // convenience function for reduce
     const sum = (a, b) => a + b
+    // convenience function for formatting
+    const fixed_float = (float) => parseFloat(float).toFixed(3)
 
     // only half diameter of outer strings
     const cumulative_string_thickness = string_thicknesses
@@ -41,6 +43,19 @@ export default function proper_string_spacing(
     const cumulative_distances = midline_distances
         .map((_, i, arr) => arr.slice(0, i + 1).reduce(sum))
     
-    // make it more legible by including the first string with a 0 offset    
-    return [0].concat(cumulative_distances)
+    // make it more legible by including the first string with a 0 offset
+    // and trimming to thousandths
+    const midlines = [0].concat(midline_distances).map(fixed_float)
+    const cumulatives = [0].concat(cumulative_distances).map(fixed_float)
+    const inner_edges = fixed_float(inner_edge_distance)
+
+    // string count array for convenient formatting
+    const strings = Array.from({length: cumulatives.length}, (_, i) => i + 1)
+
+    return {
+        inner_edges,
+        midlines,
+        cumulatives,
+        strings
+    }
 }
