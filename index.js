@@ -32,7 +32,7 @@ function create_copy_button(index) {
 }
 
 function create_table_header() {
-  return ['string', 'adjacent distances', 'cumulative distances']
+  return ['string ', 'adjacent distances ', 'cumulative distances ']
     .map((txt, i) => {
       const el = create_cell(txt, true)
       const copy_button = create_copy_button(i)
